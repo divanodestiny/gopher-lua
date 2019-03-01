@@ -312,6 +312,7 @@ print("hello")
 	L := NewState()
 	defer L.Close()
 
+	t.Logf("tmpFile name: %v", tmpFile.Name())
 	_, err = L.LoadFile(tmpFile.Name())
 	errorIfNotNil(t, err)
 }
@@ -327,7 +328,7 @@ func TestLoadFileForEmptyFile(t *testing.T) {
 
 	L := NewState()
 	defer L.Close()
-
+	t.Logf("tmpFile name: %v", tmpFile.Name())
 	_, err = L.LoadFile(tmpFile.Name())
 	errorIfNotNil(t, err)
 }

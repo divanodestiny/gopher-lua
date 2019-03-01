@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -343,16 +344,16 @@ func (ls *LState) CallMeta(obj LValue, event string) LValue {
 /* load and function call operations {{{ */
 
 func (ls *LState) LoadFile(path string) (*LFunction, error) {
-	var file *os.File
+	var file http.File
 	var err error
 	if len(path) == 0 {
 		file = os.Stdin
 	} else {
-		file, err = os.Open(path)
-		defer file.Close()
+		file, err = filesystem.Open(path)
 		if err != nil {
 			return nil, newApiErrorE(ApiErrorFile, err)
 		}
+		defer file.Close()
 	}
 
 	reader := bufio.NewReader(file)
